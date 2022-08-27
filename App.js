@@ -1,5 +1,4 @@
 import { StatusBar } from "expo-status-bar";
-// import React, { useState } from "react";
 import React, { useState, useEffect, useCallback } from "react";
 import {
   StyleSheet,
@@ -12,27 +11,37 @@ import {
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
+  Dimensions,
+  // useWindowDimensions,
 } from "react-native";
-// import * as Font from "expo-font";
-// import { AppLoading } from "expo";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
-
-// const loadApplication = async () => {
-//   await Font.loadAsync({
-//     "Roboto-Medium": require("./fonts/Roboto-Medium.ttf"),
-//     "Roboto-Regular": require("./fonts/Roboto-Regular.ttf"),
-//   });
-// };
 
 export default function App() {
   const userInfo = {
     email: "",
     password: "",
   };
+  // const window = useWindowDimensions();
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setState] = useState(userInfo);
-  const [isReady, setIsReady] = useState(false);
+  // const [windowWidth, setWindowWidth] = useState(window.width - 20 * 2);
+
+  const [dimensions, setdimensions] = useState(
+    Dimensions.get("window").width - 20 * 2
+  );
+
+  useEffect(() => {
+    const onChange = () => {
+      const width = Dimensions.get("window").width - 20 * 2;
+
+      setdimensions(width);
+    };
+    Dimensions.addEventListener("change", onChange);
+    return () => {
+      Dimensions.removeEventListener("change", onChange);
+    };
+  }, []);
 
   const keyboardHide = () => {
     setIsShowKeyboard(false);
@@ -46,23 +55,34 @@ export default function App() {
     "Roboto-Regular": require("./fonts/Roboto-Regular.ttf"),
   });
 
-  // if (!isReady) {
-  //   return (
-  //     <AppLoading
-  //       startAsync={loadApplication}
-  //       onFinish={() => setIsReady(true)}
-  //       onError={console.warn}
-  //     />
-  //   );
-  // }
-
   useEffect(() => {
     async function prepare() {
       await SplashScreen.preventAutoHideAsync();
     }
-
     prepare();
+    // console.log(window.width);
+    // const onChange = () => {
+    //   const width = window.width - 20 * 2;
+    //   setWindowWidth(width);
+    // };
+    // onChange();
   }, []);
+
+  // useEffect(() => {
+  //   const onChange = () => {
+  //     const width = window.width - 20 * 2;
+  //     setWindowWidth(width);
+
+  //     width = Dimensions.get("window").width;
+  //     console.log("width:", width);
+  //   };
+  //   Dimensions.addEventListener("change", onChange);
+  //   return () => {
+  //     Dimensions.removeEventListener("change", onChange);
+
+  //   };
+  //   onChange();
+  // }, []);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -73,11 +93,10 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-
+  console.log(Dimensions.get("window").width);
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container} onLayout={onLayoutRootView}>
-        {/* <View style={styles.container}> */}
         <ImageBackground
           style={styles.imag}
           source={require("./images/photoBg.jpg")}
@@ -89,6 +108,7 @@ export default function App() {
               style={{
                 ...styles.form,
                 marginBottom: isShowKeyboard ? 20 : 100,
+                width: dimensions,
               }}
             >
               <View style={styles.header}>
@@ -148,11 +168,11 @@ const styles = StyleSheet.create({
   imag: {
     flex: 1,
     resizeMode: "cover",
-    // justifyContent: "center",
     justifyContent: "flex-end",
+    alignItems: "center",
   },
   form: {
-    marginHorizontal: 30,
+    // marginHorizontal: 30,
   },
   header: {
     alignItems: "center",
