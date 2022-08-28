@@ -2,52 +2,50 @@ import { StatusBar } from "expo-status-bar";
 import React, { useState, useEffect, useCallback } from "react";
 import {
   StyleSheet,
-  Text,
+  // Text,
   View,
   ImageBackground,
-  TextInput,
-  TouchableOpacity,
+  // TextInput,
+  // TouchableOpacity,
   Platform,
   KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
-  Dimensions,
-  // useWindowDimensions,
+  // Dimensions,
 } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import RegistrationScreen from "./Screens/RegistrationScreen";
+import LoginScreen from "./Screens/LoginScreen";
 
 export default function App() {
-  const userInfo = {
-    email: "",
-    password: "",
-  };
-  // const window = useWindowDimensions();
-  const [isShowKeyboard, setIsShowKeyboard] = useState(false);
-  const [state, setState] = useState(userInfo);
-  // const [windowWidth, setWindowWidth] = useState(window.width - 20 * 2);
+  // const userInfo = {
+  //   email: "",
+  //   password: "",
+  // };
 
-  const [dimensions, setdimensions] = useState(
-    Dimensions.get("window").width - 20 * 2
-  );
+  // const [isShowKeyboard, setIsShowKeyboard] = useState(false);
+  // const [state, setState] = useState(userInfo);
+  // const [dimensions, setdimensions] = useState(
+  //   Dimensions.get("window").width - 20 * 2
+  // );
 
-  useEffect(() => {
-    const onChange = () => {
-      const width = Dimensions.get("window").width - 20 * 2;
+  // useEffect(() => {
+  //   const onChange = () => {
+  //     const width = Dimensions.get("window").width - 20 * 2;
 
-      setdimensions(width);
-    };
-    Dimensions.addEventListener("change", onChange);
-    return () => {
-      Dimensions.removeEventListener("change", onChange);
-    };
-  }, []);
+  //     setdimensions(width);
+  //   };
+  //   Dimensions.addEventListener("change", onChange);
+  //   return () => {
+  //     Dimensions.removeEventListener("change", onChange);
+  //   };
+  // }, []);
 
   const keyboardHide = () => {
-    setIsShowKeyboard(false);
+    // setIsShowKeyboard(false);
     Keyboard.dismiss();
-    console.log(state);
-    setState(userInfo);
+    // setState(userInfo);
   };
 
   const [fontsLoaded] = useFonts({
@@ -60,29 +58,7 @@ export default function App() {
       await SplashScreen.preventAutoHideAsync();
     }
     prepare();
-    // console.log(window.width);
-    // const onChange = () => {
-    //   const width = window.width - 20 * 2;
-    //   setWindowWidth(width);
-    // };
-    // onChange();
   }, []);
-
-  // useEffect(() => {
-  //   const onChange = () => {
-  //     const width = window.width - 20 * 2;
-  //     setWindowWidth(width);
-
-  //     width = Dimensions.get("window").width;
-  //     console.log("width:", width);
-  //   };
-  //   Dimensions.addEventListener("change", onChange);
-  //   return () => {
-  //     Dimensions.removeEventListener("change", onChange);
-
-  //   };
-  //   onChange();
-  // }, []);
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
@@ -93,7 +69,7 @@ export default function App() {
   if (!fontsLoaded) {
     return null;
   }
-  console.log(Dimensions.get("window").width);
+  // console.log(Dimensions.get("window").width);
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container} onLayout={onLayoutRootView}>
@@ -104,7 +80,8 @@ export default function App() {
           <KeyboardAvoidingView
             behavior={Platform.OS === "ios" ? "padding" : "height"}
           >
-            <View
+            <RegistrationScreen />
+            {/* <View
               style={{
                 ...styles.form,
                 marginBottom: isShowKeyboard ? 20 : 100,
@@ -113,7 +90,6 @@ export default function App() {
             >
               <View style={styles.header}>
                 <Text style={styles.headerTitle}>Регистрация</Text>
-                <Text style={styles.headerTitle}>Welcome back!</Text>
               </View>
               <View>
                 <Text style={styles.inputTitle}>Email addres</Text>
@@ -150,7 +126,7 @@ export default function App() {
               >
                 <Text style={styles.buttonTitle}>Sign In</Text>
               </TouchableOpacity>
-            </View>
+            </View> */}
             <StatusBar style="auto" />
           </KeyboardAvoidingView>
         </ImageBackground>
@@ -171,54 +147,54 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
   },
-  form: {
-    // marginHorizontal: 30,
-  },
-  header: {
-    alignItems: "center",
-    marginBottom: 100,
-  },
-  headerTitle: {
-    fontSize: 30,
-    color: "#000000",
-    fontFamily: "Roboto-Medium",
-  },
-  inputTitle: {
-    color: "#000000",
-    textTransform: "uppercase",
-    fontWeight: "bold",
-    fontSize: 18,
-    marginBottom: 10,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#000000",
-    height: 40,
-    borderRadius: 7,
-    padding: 10,
-  },
-  button: {
-    height: 40,
-    borderRadius: 15,
-    marginTop: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    marginHorizontal: 70,
-    ...Platform.select({
-      ios: {
-        backgroundColor: "transparent",
-        borderColor: "#000000",
-      },
-      android: {
-        backgroundColor: "#ECEEE1",
-        borderColor: "transparent",
-      },
-    }),
-  },
-  buttonTitle: {
-    color: "#000000",
-    fontSize: 18,
-    textTransform: "uppercase",
-    fontWeight: "bold",
-  },
+  // form: {
+  //   marginHorizontal: 30,
+  // },
+  // header: {
+  //   alignItems: "center",
+  //   marginBottom: 100,
+  // },
+  // headerTitle: {
+  //   fontSize: 30,
+  //   color: "#000000",
+  //   fontFamily: "Roboto-Medium",
+  // },
+  // inputTitle: {
+  //   color: "#000000",
+  //   textTransform: "uppercase",
+  //   fontWeight: "bold",
+  //   fontSize: 18,
+  //   marginBottom: 10,
+  // },
+  // input: {
+  //   borderWidth: 1,
+  //   borderColor: "#000000",
+  //   height: 40,
+  //   borderRadius: 7,
+  //   padding: 10,
+  // },
+  // button: {
+  //   height: 40,
+  //   borderRadius: 15,
+  //   marginTop: 20,
+  //   justifyContent: "center",
+  //   alignItems: "center",
+  //   marginHorizontal: 70,
+  //   ...Platform.select({
+  //     ios: {
+  //       backgroundColor: "transparent",
+  //       borderColor: "#000000",
+  //     },
+  //     android: {
+  //       backgroundColor: "#ECEEE1",
+  //       borderColor: "transparent",
+  //     },
+  //   }),
+  // },
+  // buttonTitle: {
+  //   color: "#000000",
+  //   fontSize: 18,
+  //   textTransform: "uppercase",
+  //   fontWeight: "bold",
+  // },
 });
