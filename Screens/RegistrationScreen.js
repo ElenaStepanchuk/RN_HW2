@@ -6,27 +6,24 @@ import {
   TextInput,
   TouchableOpacity,
   Dimensions,
-  //   Keyboard,
   Platform,
+  Image,
+  Linking,
 } from "react-native";
-// import { useFonts } from "expo-font";
-// import * as SplashScreen from "expo-splash-screen";
 export default function RegistrationScreen() {
   const userInfo = {
+    login: "",
     email: "",
     password: "",
   };
 
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setState] = useState(userInfo);
-  const [dimensions, setdimensions] = useState(
-    Dimensions.get("window").width - 20 * 2
-  );
+  const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
 
   useEffect(() => {
     const onChange = () => {
-      const width = Dimensions.get("window").width - 20 * 2;
-
+      const width = Dimensions.get("window").width;
       setdimensions(width);
     };
     Dimensions.addEventListener("change", onChange);
@@ -37,62 +34,47 @@ export default function RegistrationScreen() {
 
   const keyboardHide = () => {
     setIsShowKeyboard(false);
-    //   Keyboard.dismiss();
-    console.log(state);
     setState(userInfo);
+    console.log(state);
   };
-
-  //   const [fontsLoaded] = useFonts({
-  //     "Roboto-Medium": require("./fonts/Roboto-Medium.ttf"),
-  //     "Roboto-Regular": require("./fonts/Roboto-Regular.ttf"),
-  //   });
-
-  //   useEffect(() => {
-  //     async function prepare() {
-  //       await SplashScreen.preventAutoHideAsync();
-  //     }
-  //     prepare();
-  //   }, []);
-
-  //   const onLayoutRootView = useCallback(async () => {
-  //     if (fontsLoaded) {
-  //       await SplashScreen.hideAsync();
-  //     }
-  //   }, [fontsLoaded]);
-
-  //   if (!fontsLoaded) {
-  //     return null;
-  //   }
-  console.log(Dimensions.get("window").width);
-
+  const LoginPage = () => {
+    let url = "#";
+    Linking.openURL(url);
+  };
   return (
     <View
       style={{
         ...styles.form,
-        marginBottom: isShowKeyboard ? 20 : 100,
+        marginBottom: isShowKeyboard ? 80 : 0,
         width: dimensions,
       }}
     >
-      <View style={styles.photo}></View>
+      <View style={{ ...styles.photo, left: dimensions / 2 - 60 }}>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          style={styles.addBatton}
+          // onPress={addPhoto}
+        >
+          <Image source={require("../images/addBatton.png")} />
+        </TouchableOpacity>
+      </View>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Регистрация</Text>
       </View>
       <View>
         <TextInput
-          style={styles.input}
-          //   textAlign={"center"}
+          style={{ ...styles.input, width: dimensions - 16 * 2 }}
           placeholder="Логин"
           onFocus={() => setIsShowKeyboard(true)}
-          value={state.email}
+          value={state.login}
           onChangeText={(value) => {
-            setState((prevState) => ({ ...prevState, email: value }));
+            setState((prevState) => ({ ...prevState, login: value }));
           }}
         />
       </View>
       <View style={{ marginTop: 16 }}>
         <TextInput
-          style={styles.input}
-          //   textAlign={"center"}
+          style={{ ...styles.input, width: dimensions - 16 * 2 }}
           placeholder="Адрес электронной почты"
           onFocus={() => setIsShowKeyboard(true)}
           value={state.email}
@@ -103,9 +85,8 @@ export default function RegistrationScreen() {
       </View>
       <View style={{ marginTop: 16 }}>
         <TextInput
-          style={styles.input}
+          style={{ ...styles.input, width: dimensions - 16 * 2 }}
           placeholder="Пароль"
-          //   textAlign={"center"}
           secureTextEntry={true}
           onFocus={() => setIsShowKeyboard(true)}
           value={state.password}
@@ -116,30 +97,51 @@ export default function RegistrationScreen() {
             }));
           }}
         />
+        <TouchableOpacity activeOpacity={0.5} onPress={LoginPage}>
+          <Text style={styles.showPassword}>Показать</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        style={styles.button}
-        onPress={keyboardHide}
-      >
-        <Text style={styles.buttonTitle}>Sign In</Text>
+      <View style={{ ...styles.button, width: dimensions - 16 * 2 }}>
+        <TouchableOpacity activeOpacity={0.5} onPress={keyboardHide}>
+          <Text style={styles.buttonTitle}>Зарегистрироватся</Text>
+        </TouchableOpacity>
+      </View>
+      <TouchableOpacity activeOpacity={0.5} onPress={LoginPage}>
+        <Text style={styles.link}>Уже есть аккаунт? Войти</Text>
       </TouchableOpacity>
+
+      <Image
+        source={require("../images/indicator.png")}
+        style={styles.indicator}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   form: {
-    // marginHorizontal: 30,
+    paddingTop: 92,
+    paddingBottom: 78,
+    borderWidth: 1,
+    backgroundColor: "#FFFFFF",
+    borderTopEndRadius: 25,
+    borderTopStartRadius: 25,
+    alignItems: "center",
+    borderColor: "#FFFFFF",
   },
   photo: {
     width: 120,
     height: 120,
     backgroundColor: "#F6F6F6",
-    // borderWidth: 1,
-    // borderColor: "#E8E8E8",
     borderRadius: 16,
     zIndex: 5,
+    position: "absolute",
+    top: -60,
+  },
+  addBatton: {
+    position: "absolute",
+    top: 81,
+    left: 107,
   },
   header: {
     alignItems: "center",
@@ -150,15 +152,7 @@ const styles = StyleSheet.create({
     color: "#212121",
     fontFamily: "Roboto-Medium",
     lineHeight: 35,
-    // textAlign: "center",
   },
-  //   inputTitle: {
-  //     color: "#000000",
-  //     textTransform: "uppercase",
-  //     fontWeight: "bold",
-  //     fontSize: 18,
-  //     marginBottom: 10,
-  //   },
   input: {
     borderWidth: 1,
     borderColor: "#E8E8E8",
@@ -171,28 +165,50 @@ const styles = StyleSheet.create({
     fontFamily: "Roboto-Regular",
     lineHeight: 19,
   },
+  showPassword: {
+    display: "flex",
+    position: "absolute",
+    top: -36,
+    right: 16,
+    color: "#1B4371",
+    height: 50,
+    fontSize: 16,
+    fontFamily: "Roboto-Regular",
+    lineHeight: 19,
+  },
   button: {
-    height: 40,
-    borderRadius: 15,
-    marginTop: 20,
-    justifyContent: "center",
-    alignItems: "center",
-    marginHorizontal: 70,
+    borderRadius: 100,
+    marginTop: 43,
+    paddingHorizontal: 32,
+    paddingVertical: 16,
     ...Platform.select({
       ios: {
         backgroundColor: "transparent",
-        borderColor: "#000000",
+        borderColor: "#FF6C00",
       },
       android: {
-        backgroundColor: "#ECEEE1",
+        backgroundColor: "#FF6C00",
         borderColor: "transparent",
       },
     }),
   },
   buttonTitle: {
-    color: "#000000",
-    fontSize: 18,
-    textTransform: "uppercase",
-    fontWeight: "bold",
+    color: "#FFFFFF",
+    fontSize: 16,
+    fontFamily: "Roboto-Regular",
+    lineHeight: 19,
+    textAlign: "center",
+  },
+  link: {
+    color: "#1B4371",
+    fontSize: 16,
+    fontFamily: "Roboto-Regular",
+    lineHeight: 19,
+    textAlign: "center",
+    marginTop: 16,
+  },
+  indicator: {
+    position: "absolute",
+    bottom: 0,
   },
 });
