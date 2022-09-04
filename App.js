@@ -45,8 +45,8 @@ export default function App() {
           style={styles.imag}
           source={require("./images/photoBg.jpg")}
         >
-          {/* <RegistrationScreen /> */}
-          <LoginScreen />
+          <RegistrationScreen />
+          {/* <LoginScreen /> */}
           <StatusBar style="auto" />
         </ImageBackground>
       </View>
