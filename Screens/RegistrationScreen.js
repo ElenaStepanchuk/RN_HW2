@@ -9,6 +9,8 @@ import {
   Platform,
   Image,
   Linking,
+  Keyboard,
+  KeyboardAvoidingView,
 } from "react-native";
 export default function RegistrationScreen() {
   const userInfo = {
@@ -28,7 +30,7 @@ export default function RegistrationScreen() {
     };
     Dimensions.addEventListener("change", onChange);
     // return () => {
-    //   Dimensions.removeEventListener("change", onChange);
+    //   Dimensions.remove("change", onChange);
     // };
   }, []);
 
@@ -36,85 +38,90 @@ export default function RegistrationScreen() {
     setIsShowKeyboard(false);
     setState(userInfo);
     console.log(state);
+    Keyboard.dismiss();
   };
   const LoginPage = () => {
     let url = "#";
     Linking.openURL(url);
   };
   return (
-    <View
-      style={{
-        ...styles.form,
-        marginBottom: isShowKeyboard ? 80 : 0,
-        width: dimensions,
-      }}
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1, justifyContent: "flex-end" }}
     >
-      <View style={{ ...styles.photo, left: dimensions / 2 - 60 }}>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          style={styles.addBatton}
-          // onPress={addPhoto}
-        >
-          <Image source={require("../images/addBatton.png")} />
-        </TouchableOpacity>
-      </View>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Регистрация</Text>
-      </View>
-      <View>
-        <TextInput
-          style={{ ...styles.input, width: dimensions - 16 * 2 }}
-          placeholder="Логин"
-          onFocus={() => setIsShowKeyboard(true)}
-          value={state.login}
-          onChangeText={(value) => {
-            setState((prevState) => ({ ...prevState, login: value }));
-          }}
-        />
-      </View>
-      <View style={{ marginTop: 16 }}>
-        <TextInput
-          style={{ ...styles.input, width: dimensions - 16 * 2 }}
-          placeholder="Адрес электронной почты"
-          onFocus={() => setIsShowKeyboard(true)}
-          value={state.email}
-          onChangeText={(value) => {
-            setState((prevState) => ({ ...prevState, email: value }));
-          }}
-        />
-      </View>
-      <View style={{ marginTop: 16 }}>
-        <TextInput
-          style={{ ...styles.input, width: dimensions - 16 * 2 }}
-          placeholder="Пароль"
-          secureTextEntry={true}
-          onFocus={() => setIsShowKeyboard(true)}
-          value={state.password}
-          onChangeText={(value) => {
-            setState((prevState) => ({
-              ...prevState,
-              password: value,
-            }));
-          }}
-        />
+      <View
+        style={{
+          ...styles.form,
+          marginBottom: isShowKeyboard ? -113 : 0,
+          width: dimensions,
+        }}
+      >
+        <View style={{ ...styles.photo, left: dimensions / 2 - 60 }}>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            style={styles.addBatton}
+            // onPress={addPhoto}
+          >
+            <Image source={require("../images/addBatton.png")} />
+          </TouchableOpacity>
+        </View>
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>Регистрация</Text>
+        </View>
+        <View>
+          <TextInput
+            style={{ ...styles.input, width: dimensions - 16 * 2 }}
+            placeholder="Логин"
+            onFocus={() => setIsShowKeyboard(true)}
+            value={state.login}
+            onChangeText={(value) => {
+              setState((prevState) => ({ ...prevState, login: value }));
+            }}
+          />
+        </View>
+        <View style={{ marginTop: 16 }}>
+          <TextInput
+            style={{ ...styles.input, width: dimensions - 16 * 2 }}
+            placeholder="Адрес электронной почты"
+            onFocus={() => setIsShowKeyboard(true)}
+            value={state.email}
+            onChangeText={(value) => {
+              setState((prevState) => ({ ...prevState, email: value }));
+            }}
+          />
+        </View>
+        <View style={{ marginTop: 16 }}>
+          <TextInput
+            style={{ ...styles.input, width: dimensions - 16 * 2 }}
+            placeholder="Пароль"
+            secureTextEntry={true}
+            onFocus={() => setIsShowKeyboard(true)}
+            value={state.password}
+            onChangeText={(value) => {
+              setState((prevState) => ({
+                ...prevState,
+                password: value,
+              }));
+            }}
+          />
+          <TouchableOpacity activeOpacity={0.5} onPress={LoginPage}>
+            <Text style={styles.showPassword}>Показать</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={{ ...styles.button, width: dimensions - 16 * 2 }}>
+          <TouchableOpacity activeOpacity={0.5} onPress={keyboardHide}>
+            <Text style={styles.buttonTitle}>Зарегистрироватся</Text>
+          </TouchableOpacity>
+        </View>
         <TouchableOpacity activeOpacity={0.5} onPress={LoginPage}>
-          <Text style={styles.showPassword}>Показать</Text>
+          <Text style={styles.link}>Уже есть аккаунт? Войти</Text>
         </TouchableOpacity>
+        <Image
+          source={require("../images/indicator.png")}
+          style={styles.indicator}
+        />
       </View>
-      <View style={{ ...styles.button, width: dimensions - 16 * 2 }}>
-        <TouchableOpacity activeOpacity={0.5} onPress={keyboardHide}>
-          <Text style={styles.buttonTitle}>Зарегистрироватся</Text>
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity activeOpacity={0.5} onPress={LoginPage}>
-        <Text style={styles.link}>Уже есть аккаунт? Войти</Text>
-      </TouchableOpacity>
-
-      <Image
-        source={require("../images/indicator.png")}
-        style={styles.indicator}
-      />
-    </View>
+    </KeyboardAvoidingView>
   );
 }
 

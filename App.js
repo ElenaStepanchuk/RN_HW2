@@ -4,8 +4,6 @@ import {
   StyleSheet,
   View,
   ImageBackground,
-  Platform,
-  KeyboardAvoidingView,
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
@@ -47,13 +45,9 @@ export default function App() {
           style={styles.imag}
           source={require("./images/photoBg.jpg")}
         >
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-          >
-            <RegistrationScreen />
-            {/* <LoginScreen /> */}
-            <StatusBar style="auto" />
-          </KeyboardAvoidingView>
+          {/* <RegistrationScreen /> */}
+          <LoginScreen />
+          <StatusBar style="auto" />
         </ImageBackground>
       </View>
     </TouchableWithoutFeedback>
