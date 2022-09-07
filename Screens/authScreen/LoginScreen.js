@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -12,9 +12,8 @@ import {
   Keyboard,
   KeyboardAvoidingView,
 } from "react-native";
-export default function RegistrationScreen() {
+export default function LoginScreen({ navigation }) {
   const userInfo = {
-    login: "",
     email: "",
     password: "",
   };
@@ -30,7 +29,7 @@ export default function RegistrationScreen() {
     };
     Dimensions.addEventListener("change", onChange);
     // return () => {
-    //   Dimensions.remove("change", onChange);
+    //   Dimensions.removeEventListener("change", onChange);
     // };
   }, []);
 
@@ -56,30 +55,10 @@ export default function RegistrationScreen() {
           width: dimensions,
         }}
       >
-        <View style={{ ...styles.photo, left: dimensions / 2 - 60 }}>
-          <TouchableOpacity
-            activeOpacity={0.5}
-            style={styles.addBatton}
-            // onPress={addPhoto}
-          >
-            <Image source={require("../images/addBatton.png")} />
-          </TouchableOpacity>
-        </View>
         <View style={styles.header}>
-          <Text style={styles.headerTitle}>Регистрация</Text>
+          <Text style={styles.headerTitle}>Войти</Text>
         </View>
         <View>
-          <TextInput
-            style={{ ...styles.input, width: dimensions - 16 * 2 }}
-            placeholder="Логин"
-            onFocus={() => setIsShowKeyboard(true)}
-            value={state.login}
-            onChangeText={(value) => {
-              setState((prevState) => ({ ...prevState, login: value }));
-            }}
-          />
-        </View>
-        <View style={{ marginTop: 16 }}>
           <TextInput
             style={{ ...styles.input, width: dimensions - 16 * 2 }}
             placeholder="Адрес электронной почты"
@@ -110,14 +89,17 @@ export default function RegistrationScreen() {
         </View>
         <View style={{ ...styles.button, width: dimensions - 16 * 2 }}>
           <TouchableOpacity activeOpacity={0.5} onPress={keyboardHide}>
-            <Text style={styles.buttonTitle}>Зарегистрироватся</Text>
+            <Text style={styles.buttonTitle}>Войти</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity activeOpacity={0.5} onPress={LoginPage}>
-          <Text style={styles.link}>Уже есть аккаунт? Войти</Text>
+        <TouchableOpacity
+          activeOpacity={0.5}
+          onPress={() => navigation.navigate("Register")}
+        >
+          <Text style={styles.link}>Нет аккаунта? Зарегистрироваться</Text>
         </TouchableOpacity>
         <Image
-          source={require("../images/indicator.png")}
+          source={require("../../images/indicator.png")}
           style={styles.indicator}
         />
       </View>
@@ -127,8 +109,8 @@ export default function RegistrationScreen() {
 
 const styles = StyleSheet.create({
   form: {
-    paddingTop: 92,
-    paddingBottom: 78,
+    paddingTop: 32,
+    paddingBottom: 144,
     borderWidth: 1,
     backgroundColor: "#FFFFFF",
     borderTopEndRadius: 25,
@@ -136,20 +118,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     borderColor: "#FFFFFF",
   },
-  photo: {
-    width: 120,
-    height: 120,
-    backgroundColor: "#F6F6F6",
-    borderRadius: 16,
-    zIndex: 5,
-    position: "absolute",
-    top: -60,
-  },
-  addBatton: {
-    position: "absolute",
-    top: 81,
-    left: 107,
-  },
+
   header: {
     alignItems: "center",
     marginBottom: 32,
