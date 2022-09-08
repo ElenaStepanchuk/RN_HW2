@@ -10,6 +10,7 @@ import {
   Image,
   Linking,
   Keyboard,
+  ImageBackground,
   KeyboardAvoidingView,
 } from "react-native";
 export default function LoginScreen({ navigation }) {
@@ -44,70 +45,80 @@ export default function LoginScreen({ navigation }) {
     Linking.openURL(url);
   };
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1, justifyContent: "flex-end" }}
+    <ImageBackground
+      style={styles.imag}
+      source={require("../../images/photoBg.jpg")}
     >
-      <View
-        style={{
-          ...styles.form,
-          marginBottom: isShowKeyboard ? -113 : 0,
-          width: dimensions,
-        }}
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={{ flex: 1, justifyContent: "flex-end" }}
       >
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Войти</Text>
-        </View>
-        <View>
-          <TextInput
-            style={{ ...styles.input, width: dimensions - 16 * 2 }}
-            placeholder="Адрес электронной почты"
-            onFocus={() => setIsShowKeyboard(true)}
-            value={state.email}
-            onChangeText={(value) => {
-              setState((prevState) => ({ ...prevState, email: value }));
-            }}
-          />
-        </View>
-        <View style={{ marginTop: 16 }}>
-          <TextInput
-            style={{ ...styles.input, width: dimensions - 16 * 2 }}
-            placeholder="Пароль"
-            secureTextEntry={true}
-            onFocus={() => setIsShowKeyboard(true)}
-            value={state.password}
-            onChangeText={(value) => {
-              setState((prevState) => ({
-                ...prevState,
-                password: value,
-              }));
-            }}
-          />
-          <TouchableOpacity activeOpacity={0.5} onPress={LoginPage}>
-            <Text style={styles.showPassword}>Показать</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={{ ...styles.button, width: dimensions - 16 * 2 }}>
-          <TouchableOpacity activeOpacity={0.5} onPress={keyboardHide}>
-            <Text style={styles.buttonTitle}>Войти</Text>
-          </TouchableOpacity>
-        </View>
-        <TouchableOpacity
-          activeOpacity={0.5}
-          onPress={() => navigation.navigate("Register")}
+        <View
+          style={{
+            ...styles.form,
+            marginBottom: isShowKeyboard ? -113 : 0,
+            width: dimensions,
+          }}
         >
-          <Text style={styles.link}>Нет аккаунта? Зарегистрироваться</Text>
-        </TouchableOpacity>
-        <Image
-          source={require("../../images/indicator.png")}
-          style={styles.indicator}
-        />
-      </View>
-    </KeyboardAvoidingView>
+          <View style={styles.header}>
+            <Text style={styles.headerTitle}>Войти</Text>
+          </View>
+          <View>
+            <TextInput
+              style={{ ...styles.input, width: dimensions - 16 * 2 }}
+              placeholder="Адрес электронной почты"
+              onFocus={() => setIsShowKeyboard(true)}
+              value={state.email}
+              onChangeText={(value) => {
+                setState((prevState) => ({ ...prevState, email: value }));
+              }}
+            />
+          </View>
+          <View style={{ marginTop: 16 }}>
+            <TextInput
+              style={{ ...styles.input, width: dimensions - 16 * 2 }}
+              placeholder="Пароль"
+              secureTextEntry={true}
+              onFocus={() => setIsShowKeyboard(true)}
+              value={state.password}
+              onChangeText={(value) => {
+                setState((prevState) => ({
+                  ...prevState,
+                  password: value,
+                }));
+              }}
+            />
+            <TouchableOpacity activeOpacity={0.5} onPress={LoginPage}>
+              <Text style={styles.showPassword}>Показать</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ ...styles.button, width: dimensions - 16 * 2 }}>
+            <TouchableOpacity activeOpacity={0.5} onPress={keyboardHide}>
+              <Text style={styles.buttonTitle}>Войти</Text>
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            activeOpacity={0.5}
+            onPress={() => navigation.navigate("Register")}
+          >
+            <Text style={styles.link}>Нет аккаунта? Зарегистрироваться</Text>
+          </TouchableOpacity>
+          <Image
+            source={require("../../images/indicator.png")}
+            style={styles.indicator}
+          />
+        </View>
+      </KeyboardAvoidingView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  imag: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "flex-end",
+  },
   form: {
     paddingTop: 32,
     paddingBottom: 144,

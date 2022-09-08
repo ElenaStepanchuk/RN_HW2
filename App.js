@@ -3,7 +3,6 @@ import React, { useEffect, useCallback } from "react";
 import {
   StyleSheet,
   View,
-  ImageBackground,
   Keyboard,
   TouchableWithoutFeedback,
 } from "react-native";
@@ -23,10 +22,38 @@ import ProfileScreen from "./Screens/mainScreen/ProfileScreen";
 const Stack = createStackNavigator();
 const MainTab = createBottomTabNavigator();
 
+const useRoute = (isAuth) => {
+  if (!isAuth) {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Register"
+          component={RegistrationScreen}
+        />
+        <Stack.Screen
+          options={{ headerShown: false }}
+          name="Login"
+          component={LoginScreen}
+        />
+      </Stack.Navigator>
+    );
+  }
+  return (
+    <MainTab.Navigator>
+      <MainTab.Screen name="PostsScreen" component={PostsScreen} />
+      <MainTab.Screen name="CreatePostsScreen" component={CreatePostsScreen} />
+      <MainTab.Screen name="ProfileScreen" component={ProfileScreen} />
+    </MainTab.Navigator>
+  );
+};
+
 export default function App() {
   const keyboardHide = () => {
     Keyboard.dismiss();
   };
+
+  const routing = useRoute(true);
 
   const [fontsLoaded] = useFonts({
     "Roboto-Medium": require("./fonts/Roboto-Medium.ttf"),
@@ -52,41 +79,11 @@ export default function App() {
   return (
     <TouchableWithoutFeedback onPress={keyboardHide}>
       <View style={styles.container} onLayout={onLayoutRootView}>
-        <ImageBackground
-          style={styles.imag}
-          source={require("./images/photoBg.jpg")}
-        >
-          <NavigationContainer>
-            <MainTab.Navigator>
-              <MainTab.Screen name="PostsScreen" component={PostsScreen} />
-              <MainTab.Screen
-                name="CreatePostsScreen"
-                component={CreatePostsScreen}
-              />
-              <MainTab.Screen name="ProfileScreen" component={ProfileScreen} />
-            </MainTab.Navigator>
-          </NavigationContainer>
-          <StatusBar style="auto" />
-        </ImageBackground>
+        <NavigationContainer>{routing}</NavigationContainer>
+        <StatusBar style="auto" />
       </View>
     </TouchableWithoutFeedback>
   );
-}
-
-//auth
-{
-  /* <Stack.Navigator>
-  <Stack.Screen
-    options={{ headerShown: false }}
-    name="Register"
-    component={RegistrationScreen}
-  />
-  <Stack.Screen
-    options={{ headerShown: false }}
-    name="Login"
-    component={LoginScreen}
-  />
-</Stack.Navigator>; */
 }
 
 const styles = StyleSheet.create({
@@ -94,10 +91,5 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     justifyContent: "center",
-  },
-  imag: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "flex-end",
   },
 });
