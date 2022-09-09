@@ -39,8 +39,24 @@ const useRoute = (isAuth) => {
             return (
               <AntDesign
                 name="appstore-o"
-                size={size}
-                color={!focused ? (color = "#D9D9D9") : (color = "#FF6C00")}
+                size={24}
+                color={!focused ? "#212121" : "#FFFFFF"}
+                style={
+                  !focused
+                    ? {
+                        width: 40,
+                        textAlign: "center",
+                        borderRadius: 20,
+                      }
+                    : {
+                        height: 40,
+                        width: 70,
+                        textAlign: "center",
+                        textAlignVertical: "center",
+                        backgroundColor: "#FF6C00",
+                        borderRadius: 20,
+                      }
+                }
               />
             );
           },
@@ -53,10 +69,25 @@ const useRoute = (isAuth) => {
           tabBarIcon: ({ focused, size, color }) => {
             return (
               <AntDesign
-                // style={{ width: 70, height: 40 }}
-                name="pluscircle"
-                size={40}
-                color={!focused ? (color = "#D9D9D9") : (color = "#FF6C00")}
+                name="plus"
+                size={24}
+                color={!focused ? "#212121" : "#FFFFFF"}
+                style={
+                  !focused
+                    ? {
+                        width: 40,
+                        textAlign: "center",
+                        borderRadius: 20,
+                      }
+                    : {
+                        height: 40,
+                        width: 70,
+                        textAlign: "center",
+                        textAlignVertical: "center",
+                        backgroundColor: "#FF6C00",
+                        borderRadius: 20,
+                      }
+                }
               />
             );
           },
@@ -70,8 +101,24 @@ const useRoute = (isAuth) => {
             return (
               <Feather
                 name="user"
-                size={size}
-                color={!focused ? (color = "#D9D9D9") : (color = "#FF6C00")}
+                size={24}
+                color={!focused ? "#212121" : "#FFFFFF"}
+                style={
+                  !focused
+                    ? {
+                        width: 40,
+                        textAlign: "center",
+                        borderRadius: 20,
+                      }
+                    : {
+                        height: 40,
+                        width: 70,
+                        textAlign: "center",
+                        textAlignVertical: "center",
+                        backgroundColor: "#FF6C00",
+                        borderRadius: 20,
+                      }
+                }
               />
             );
           },
