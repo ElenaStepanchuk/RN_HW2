@@ -115,9 +115,16 @@ export default function LoginScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   imag: {
-    flex: 1,
-    resizeMode: "cover",
-    justifyContent: "flex-end",
+    // flex: 1,
+    // resizeMode: "cover",
+    // justifyContent: "flex-end",
+    width: Dimensions.get("window").width,
+    height: Dimensions.get("window").height,
+    position: "absolute",
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
   },
   form: {
     paddingTop: 32,
