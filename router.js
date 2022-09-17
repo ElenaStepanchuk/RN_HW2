@@ -35,6 +35,7 @@ const useRoute = (isAuth) => {
     <MainTab.Navigator tabBarOptions={{ showLabel: false }}>
       <MainTab.Screen
         options={{
+          headerShown: false,
           tabBarIcon: ({ focused, size, color }) => {
             return (
               <AntDesign
@@ -66,6 +67,7 @@ const useRoute = (isAuth) => {
       />
       <MainTab.Screen
         options={{
+          headerShown: false,
           tabBarIcon: ({ focused, size, color }) => {
             return (
               <AntDesign
@@ -97,6 +99,7 @@ const useRoute = (isAuth) => {
       />
       <MainTab.Screen
         options={{
+          headerShown: false,
           tabBarIcon: ({ focused, size, color }) => {
             return (
               <Feather
