@@ -4,11 +4,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { AntDesign, Feather } from "@expo/vector-icons";
 
-import RegistrationScreen from "./Screens/authScreen/RegistrationScreen";
-import LoginScreen from "./Screens/authScreen/LoginScreen";
-import PostsScreen from "./Screens/mainScreen/PostsScreen";
-import CreatePostsScreen from "./Screens/mainScreen/CreatePostsScreen";
-import ProfileScreen from "./Screens/mainScreen/ProfileScreen";
+import RegistrationScreen from "../Screens/authScreen/RegistrationScreen";
+import LoginScreen from "../Screens/authScreen/LoginScreen";
+import PostsScreen from "../Screens/mainScreen/PostsScreen";
+import CreatePostsScreen from "../Screens/mainScreen/CreatePostsScreen";
+import ProfileScreen from "../Screens/mainScreen/ProfileScreen";
 
 const Stack = createStackNavigator();
 const MainTab = createBottomTabNavigator();
@@ -68,6 +68,7 @@ const useRoute = (isAuth) => {
       />
       <MainTab.Screen
         options={{
+          tabBarShowLabel: false,
           headerShown: false,
           tabBarIcon: ({ focused, size, color }) => {
             return (
@@ -100,6 +101,7 @@ const useRoute = (isAuth) => {
       />
       <MainTab.Screen
         options={{
+          tabBarShowLabel: false,
           headerShown: false,
           tabBarIcon: ({ focused, size, color }) => {
             return (

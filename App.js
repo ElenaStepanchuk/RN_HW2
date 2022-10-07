@@ -8,16 +8,19 @@ import {
 } from "react-native";
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import { Provider } from "react-redux";
+
+import { store } from "./redux/store";
 
 import { NavigationContainer } from "@react-navigation/native";
-import useRoute from "./router";
+import useRoute from "./router/router";
 
 export default function App() {
   const keyboardHide = () => {
     Keyboard.dismiss();
   };
 
-  const routing = useRoute(true);
+  const routing = useRoute(false);
 
   const [fontsLoaded] = useFonts({
     "Roboto-Medium": require("./fonts/Roboto-Medium.ttf"),
@@ -41,12 +44,14 @@ export default function App() {
     return null;
   }
   return (
-    <TouchableWithoutFeedback onPress={keyboardHide}>
-      <View style={styles.container} onLayout={onLayoutRootView}>
-        <NavigationContainer>{routing}</NavigationContainer>
-        <StatusBar style="auto" />
-      </View>
-    </TouchableWithoutFeedback>
+    <Provider store={store}>
+      <TouchableWithoutFeedback onPress={keyboardHide}>
+        <View style={styles.container} onLayout={onLayoutRootView}>
+          <NavigationContainer>{routing}</NavigationContainer>
+          <StatusBar style="auto" />
+        </View>
+      </TouchableWithoutFeedback>
+    </Provider>
   );
 }
 
