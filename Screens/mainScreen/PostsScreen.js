@@ -9,8 +9,7 @@ const PostsScreen = ({ route }) => {
       setPosts((prevState) => [...prevState, route.params]);
     }
   }, [route.params]);
-  // console.log("route.params", route.params);
-  console.log(posts);
+
   return (
     <View style={styles.container}>
       <FlatList

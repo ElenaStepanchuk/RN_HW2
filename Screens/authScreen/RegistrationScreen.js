@@ -13,6 +13,11 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
 } from "react-native";
+
+import { useDispatch } from "react-redux";
+
+import { authSignUpUser } from "../../redux/auth/authOperations";
+
 export default function RegistrationScreen({ navigation }) {
   const userInfo = {
     login: "",
@@ -23,6 +28,8 @@ export default function RegistrationScreen({ navigation }) {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
   const [state, setState] = useState(userInfo);
   const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const onChange = () => {
@@ -35,10 +42,11 @@ export default function RegistrationScreen({ navigation }) {
     // };
   }, []);
 
-  const keyboardHide = () => {
+  const handleSubmit = () => {
     setIsShowKeyboard(false);
     setState(userInfo);
     console.log(state);
+    dispatch(authSignUpUser(state));
     Keyboard.dismiss();
   };
   const LoginPage = () => {
@@ -114,7 +122,7 @@ export default function RegistrationScreen({ navigation }) {
             </TouchableOpacity>
           </View>
           <View style={{ ...styles.button, width: dimensions - 16 * 2 }}>
-            <TouchableOpacity activeOpacity={0.5} onPress={keyboardHide}>
+            <TouchableOpacity activeOpacity={0.5} onPress={handleSubmit}>
               <Text style={styles.buttonTitle}>Зарегистрироваться</Text>
             </TouchableOpacity>
           </View>
