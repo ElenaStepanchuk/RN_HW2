@@ -12,7 +12,6 @@ const CreatePostsScreen = ({ navigation }) => {
   };
 
   const sendPhoto = () => {
-    // console.log(navigation);
     navigation.navigate("PostsScreen", { photo });
   };
 

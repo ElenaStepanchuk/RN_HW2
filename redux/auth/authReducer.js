@@ -5,5 +5,11 @@ export const authSlice = createSlice({
     userId: null,
     login: null,
   },
-  redusers: {},
+  redusers: {
+    updateUserProfile: (state, { payload }) => ({
+      ...state,
+      userId: payload.userId,
+    }),
+  },
 });
+console.log("authSlice", authSlice);

@@ -13,6 +13,10 @@ import {
   ImageBackground,
   KeyboardAvoidingView,
 } from "react-native";
+
+import { useDispatch } from "react-redux";
+import { authSignInUser } from "../../redux/auth/authOperations";
+
 export default function LoginScreen({ navigation }) {
   const userInfo = {
     email: "",
@@ -23,21 +27,23 @@ export default function LoginScreen({ navigation }) {
   const [state, setState] = useState(userInfo);
   const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const onChange = () => {
       const width = Dimensions.get("window").width;
       setdimensions(width);
     };
     Dimensions.addEventListener("change", onChange);
-    return () => {
-      Dimensions.removeListener("change", onChange);
-    };
+    // return () => {
+    //   Dimensions.removeListener("change", onChange);
+    // };
   }, []);
 
-  const keyboardHide = () => {
+  const handleSubmit = () => {
     setIsShowKeyboard(false);
     setState(userInfo);
-    console.log(state);
+    dispatch(authSignInUser(state));
     Keyboard.dismiss();
   };
   const LoginPage = () => {
@@ -93,7 +99,7 @@ export default function LoginScreen({ navigation }) {
             </TouchableOpacity>
           </View>
           <View style={{ ...styles.button, width: dimensions - 16 * 2 }}>
-            <TouchableOpacity activeOpacity={0.5} onPress={keyboardHide}>
+            <TouchableOpacity activeOpacity={0.5} onPress={handleSubmit}>
               <Text style={styles.buttonTitle}>Войти</Text>
             </TouchableOpacity>
           </View>

@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, useState } from "react";
 import {
   StyleSheet,
   View,
@@ -12,15 +12,16 @@ import { Provider } from "react-redux";
 
 import { store } from "./redux/store";
 
+import firebase from "./firebase/config";
+
 import { NavigationContainer } from "@react-navigation/native";
 import useRoute from "./router/router";
 
 export default function App() {
+  const [user, setUser] = useState(null);
   const keyboardHide = () => {
     Keyboard.dismiss();
   };
-
-  const routing = useRoute(false);
 
   const [fontsLoaded] = useFonts({
     "Roboto-Medium": require("./fonts/Roboto-Medium.ttf"),
@@ -40,6 +41,15 @@ export default function App() {
     }
   }, [fontsLoaded]);
 
+  firebase.auth().onAuthStateChanged((user) => {
+    setUser(user);
+    // if (user) {
+    //   var uid = user.uid;
+    // } else {
+    // }
+  });
+
+  const routing = useRoute(user);
   if (!fontsLoaded) {
     return null;
   }
