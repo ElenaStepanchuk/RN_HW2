@@ -19,14 +19,14 @@ import { useDispatch } from "react-redux";
 import { authSignUpUser } from "../../redux/auth/authOperations";
 
 export default function RegistrationScreen({ navigation }) {
-  const userInfo = {
+  const initialState = {
     login: "",
     email: "",
     password: "",
   };
 
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
-  const [state, setState] = useState(userInfo);
+  const [state, setState] = useState(initialState);
   const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
 
   const dispatch = useDispatch();
@@ -44,10 +44,10 @@ export default function RegistrationScreen({ navigation }) {
 
   const handleSubmit = () => {
     setIsShowKeyboard(false);
-    setState(userInfo);
-    console.log(state);
-    dispatch(authSignUpUser(state));
     Keyboard.dismiss();
+    dispatch(authSignUpUser(state));
+    setState(initialState);
+    console.log(state);
   };
   const LoginPage = () => {
     let url = "#";

@@ -17,14 +17,14 @@ import {
 import { useDispatch } from "react-redux";
 import { authSignInUser } from "../../redux/auth/authOperations";
 
-export default function LoginScreen({ navigation }) {
-  const userInfo = {
-    email: "",
-    password: "",
-  };
+const initialState = {
+  email: "",
+  password: "",
+};
 
+export default function LoginScreen({ navigation }) {
   const [isShowKeyboard, setIsShowKeyboard] = useState(false);
-  const [state, setState] = useState(userInfo);
+  const [state, setState] = useState(user);
   const [dimensions, setdimensions] = useState(Dimensions.get("window").width);
 
   const dispatch = useDispatch();
@@ -42,9 +42,10 @@ export default function LoginScreen({ navigation }) {
 
   const handleSubmit = () => {
     setIsShowKeyboard(false);
-    setState(userInfo);
-    dispatch(authSignInUser(state));
     Keyboard.dismiss();
+    dispatch(authSignInUser(state));
+    setState(initialState);
+    console.log(state);
   };
   const LoginPage = () => {
     let url = "#";
