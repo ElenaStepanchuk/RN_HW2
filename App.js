@@ -9,6 +9,7 @@ import {
 import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { Provider } from "react-redux";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { store } from "./redux/store";
 
@@ -43,10 +44,6 @@ export default function App() {
 
   firebase.auth().onAuthStateChanged((user) => {
     setUser(user);
-    // if (user) {
-    //   var uid = user.uid;
-    // } else {
-    // }
   });
 
   const routing = useRoute(user);
